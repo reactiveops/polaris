@@ -3,7 +3,6 @@ module github.com/fairwindsops/polaris
 go 1.15
 
 require (
-	cloud.google.com/go v0.74.0 // indirect
 	github.com/Azure/go-autorest/autorest v0.11.15 // indirect
 	github.com/Azure/go-autorest/autorest/adal v0.9.10 // indirect
 	github.com/fatih/color v1.12.0
@@ -15,7 +14,7 @@ require (
 	github.com/qri-io/jsonschema v0.1.1
 	github.com/rogpeppe/go-internal v1.6.2 // indirect
 	github.com/sirupsen/logrus v1.8.1
-	github.com/spf13/cobra v1.1.3
+	github.com/spf13/cobra v1.2.1
 	github.com/spf13/pflag v1.0.5
 	github.com/stretchr/testify v1.7.0
 	github.com/thoas/go-funk v0.8.0
