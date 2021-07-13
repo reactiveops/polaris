@@ -168,7 +168,7 @@ func CreateResourceProviderFromResource(ctx context.Context, workload string) (*
 		logrus.Errorf("Could not find workload %s: %v", workload, err)
 		return nil, err
 	}
-	workloadObj, err := NewGenericResourceFromUnstructured(obj)
+	workloadObj, err := NewGenericResourceFromUnstructured(*obj)
 	if err != nil {
 		logrus.Errorf("Could not parse workload %s: %v", workload, err)
 		return nil, err
@@ -298,7 +298,7 @@ func CreateResourceProviderFromAPI(ctx context.Context, kube kubernetes.Interfac
 			return nil, err
 		}
 		for _, obj := range objects.Items {
-			res, err := NewGenericResourceFromUnstructured(&obj)
+			res, err := NewGenericResourceFromUnstructured(obj)
 			if err != nil {
 				return nil, err
 			}

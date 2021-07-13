@@ -25,24 +25,23 @@ type GenericResource struct {
 }
 
 // NewGenericResourceFromUnstructured creates a workload from an unstructured.Unstructured
-func NewGenericResourceFromUnstructured(unst *unstructured.Unstructured) (GenericResource, error) {
+func NewGenericResourceFromUnstructured(unst unstructured.Unstructured) (GenericResource, error) {
 	workload := GenericResource{
 		Kind:     unst.GetKind(),
-		Resource: *unst,
+		Resource: unst,
 	}
 
-	objMeta, err := meta.Accessor(unst)
+	objMeta, err := meta.Accessor(&unst)
 	if err != nil {
 		return workload, err
 	}
 	workload.ObjectMeta = objMeta
 
-	b, err := json.Marshal(unst)
+	b, err := json.Marshal(&unst)
 	if err != nil {
 		return workload, err
 	}
 	workload.OriginalObjectJSON = b
-
 	m := make(map[string]interface{})
 	err = json.Unmarshal(b, &m)
 	if err != nil {
@@ -61,7 +60,6 @@ func NewGenericResourceFromUnstructured(unst *unstructured.Unstructured) (Generi
 		}
 		workload.PodSpec = &podSpec
 	}
-
 	return workload, nil
 }
 
@@ -101,7 +99,7 @@ func NewGenericResourceFromBytes(contentBytes []byte) (GenericResource, error) {
 	if err != nil {
 		return GenericResource{}, err
 	}
-	return NewGenericResourceFromUnstructured(&unst)
+	return NewGenericResourceFromUnstructured(unst)
 }
 
 // ResolveControllerFromPod builds a new workload for a given Pod
@@ -161,7 +159,7 @@ func resolveControllerFromPod(ctx context.Context, podResource kubeAPICoreV1.Pod
 
 	if lastKey != "" {
 		unst := objectCache[lastKey]
-		return NewGenericResourceFromUnstructured(&unst)
+		return NewGenericResourceFromUnstructured(unst)
 	}
 	workload, err := NewGenericResourceFromPod(podResource, podResource)
 	if err != nil {

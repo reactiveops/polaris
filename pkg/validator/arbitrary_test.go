@@ -33,7 +33,7 @@ func TestValidatePDB(t *testing.T) {
 		},
 	}
 	pdb := unstructured.Unstructured{}
-	res, err := kube.NewGenericResourceFromUnstructured(&pdb)
+	res, err := kube.NewGenericResourceFromUnstructured(pdb)
 	res.Kind = "PodDisruptionBudget"
 
 	actualResult, err := applyNonControllerSchemaChecks(&c, nil, res)
@@ -70,7 +70,7 @@ func TestValidateIngress(t *testing.T) {
 	if err != nil {
 		panic(err)
 	}
-	res, err := kube.NewGenericResourceFromUnstructured(&unst)
+	res, err := kube.NewGenericResourceFromUnstructured(unst)
 	if err != nil {
 		panic(err)
 	}
